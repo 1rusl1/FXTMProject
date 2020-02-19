@@ -30,13 +30,27 @@ class NetworkDataFetcher: NSObject {
                 }
                 do {
                     let decodedData = try self.decoder.decode([String].self, from: data)
-                    print ("DATA: \(decodedData)")
                     completion(decodedData)
                 } catch let error {
                     print (error.localizedDescription)
                 }
             }
         }.resume()
+    }
+    
+    func decode<T: Decodable>(type: T.Type, decoder: JSONDecoder, from data: Data?) -> T? {
+        guard let data = data else {
+            print ("Argument data is nil")
+            return nil
+        }
+        do {
+            let objects = try decoder.decode(type.self, from: data)
+            return objects
+        } catch let jsonError {
+            print (jsonError.localizedDescription)
+            return nil
+        }
+        
     }
     
 }

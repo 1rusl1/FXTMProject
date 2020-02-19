@@ -16,9 +16,12 @@
 		D239F8A823FC520600BF8738 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8A723FC520600BF8738 /* ChartViewController.swift */; };
 		D239F8AA23FC523E00BF8738 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8A923FC523E00BF8738 /* MainTabBarController.swift */; };
 		D239F8AF23FC5E0800BF8738 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8AE23FC5E0800BF8738 /* NetworkDataFetcher.swift */; };
-		D239F8B223FC662900BF8738 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8B123FC662900BF8738 /* CurrencyPair.swift */; };
+		D239F8B223FC662900BF8738 /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8B123FC662900BF8738 /* Symbols.swift */; };
 		D239F8B523FC722700BF8738 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8B423FC722700BF8738 /* UIViewExtensions.swift */; };
 		D239F8B723FC7B2200BF8738 /* CurrencyPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8B623FC7B2200BF8738 /* CurrencyPairCell.swift */; };
+		D2E296A323FDA2920072D76B /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E296A223FDA2920072D76B /* StringExtensions.swift */; };
+		D2E296A623FDA82B0072D76B /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E296A523FDA82B0072D76B /* ApiClient.swift */; };
+		D2E296A823FDC8010072D76B /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E296A723FDC8010072D76B /* CurrencyPair.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +37,12 @@
 		D239F8A723FC520600BF8738 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		D239F8A923FC523E00BF8738 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D239F8AE23FC5E0800BF8738 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
-		D239F8B123FC662900BF8738 /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
+		D239F8B123FC662900BF8738 /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		D239F8B423FC722700BF8738 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		D239F8B623FC7B2200BF8738 /* CurrencyPairCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairCell.swift; sourceTree = "<group>"; };
+		D2E296A223FDA2920072D76B /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		D2E296A523FDA82B0072D76B /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		D2E296A723FDC8010072D76B /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		EAB394E6050D9AF766DE351B /* Pods-FXTMproject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXTMproject.debug.xcconfig"; path = "Target Support Files/Pods-FXTMproject/Pods-FXTMproject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,12 +93,12 @@
 				D239F8B323FC679200BF8738 /* Models */,
 				D239F8B023FC5E0B00BF8738 /* Networking */,
 				D239F8AB23FC524A00BF8738 /* CurrencyList */,
-				D239F8AC23FC525100BF8738 /* Favorites */,
 				D239F8AD23FC526600BF8738 /* Chart */,
+				D239F8AC23FC525100BF8738 /* Favorites */,
 				D22AE79F23FB04E100E17327 /* Assets.xcassets */,
 				D22AE7A123FB04E100E17327 /* LaunchScreen.storyboard */,
 				D22AE7A423FB04E100E17327 /* Info.plist */,
-				D239F8B423FC722700BF8738 /* UIViewExtensions.swift */,
+				D2E296A423FDA5F90072D76B /* Extensions */,
 			);
 			path = FXTMproject;
 			sourceTree = "<group>";
@@ -126,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				D239F8AE23FC5E0800BF8738 /* NetworkDataFetcher.swift */,
+				D2E296A523FDA82B0072D76B /* ApiClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -133,9 +140,19 @@
 		D239F8B323FC679200BF8738 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D239F8B123FC662900BF8738 /* CurrencyPair.swift */,
+				D239F8B123FC662900BF8738 /* Symbols.swift */,
+				D2E296A723FDC8010072D76B /* CurrencyPair.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D2E296A423FDA5F90072D76B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D239F8B423FC722700BF8738 /* UIViewExtensions.swift */,
+				D2E296A223FDA2920072D76B /* StringExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F70132518B8E74DC6088C251 /* Frameworks */ = {
@@ -260,13 +277,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E296A623FDA82B0072D76B /* ApiClient.swift in Sources */,
 				D239F8AF23FC5E0800BF8738 /* NetworkDataFetcher.swift in Sources */,
 				D239F8A423FC516A00BF8738 /* CurrencyListViewController.swift in Sources */,
 				D239F8B523FC722700BF8738 /* UIViewExtensions.swift in Sources */,
+				D2E296A823FDC8010072D76B /* CurrencyPair.swift in Sources */,
 				D239F8AA23FC523E00BF8738 /* MainTabBarController.swift in Sources */,
 				D239F8A623FC518400BF8738 /* FavoritesViewController.swift in Sources */,
 				D22AE79923FB04E000E17327 /* AppDelegate.swift in Sources */,
-				D239F8B223FC662900BF8738 /* CurrencyPair.swift in Sources */,
+				D239F8B223FC662900BF8738 /* Symbols.swift in Sources */,
+				D2E296A323FDA2920072D76B /* StringExtensions.swift in Sources */,
 				D239F8A823FC520600BF8738 /* ChartViewController.swift in Sources */,
 				D239F8B723FC7B2200BF8738 /* CurrencyPairCell.swift in Sources */,
 			);

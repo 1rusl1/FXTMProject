@@ -13,21 +13,13 @@ class CurrencyListViewController: UIViewController {
     //MARK: Properties
     
     lazy var tableView = UITableView()
-    var currencyPairsArray = [String]() {
-        didSet {
-            currencyPairsArray.map {
-                $0.capitalized
-                //$0.insert("/", at: $0.index($0.startIndex, offsetBy: 2))
-            }
-        }
-    }
+    var currencyPairsArray = [String]()
     lazy var fetcher = NetworkDataFetcher()
     
     let identifier = "currencyPairCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         fetcher.fetchCurrencyPairs { [weak self] pairsArray in
             self?.currencyPairsArray.append(contentsOf: pairsArray)
@@ -42,6 +34,7 @@ class CurrencyListViewController: UIViewController {
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(tableView)
+        navigationItem.title = "Currency pairs"
     }
     
     func setupTableView() {
@@ -62,9 +55,14 @@ extension CurrencyListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        cell.textLabel?.text = currencyPairsArray[indexPath.row]
+        let pair = currencyPairsArray[indexPath.row].formattedPair()
+        cell.textLabel?.text = pair
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chartController = ChartViewController()
+        chartController.currencyPair = currencyPairsArray[indexPath.row]
+        navigationController?.pushViewController(chartController, animated: true)
+    }
 }
