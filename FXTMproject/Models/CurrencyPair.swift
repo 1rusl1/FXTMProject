@@ -9,22 +9,7 @@
 import Foundation
 
 struct CurrencyPair: Decodable {
-    
-    let channelID, bid, bidSize, ask, askSize, dailyChange, dailyChangePerc, lastPrice, volume, high, low: Float
-    
-    enum CodingKeys: String, CodingKey {
-        case channelID = "CHANNEL_ID"
-        case bid = "BID"
-        case bidSize = "BID_SIZE"
-        case ask = "ASK"
-        case askSize = "ASK_SIZE"
-        case dailyChange = "DAILY_CHANGE"
-        case dailyChangePerc = "DAILY_CHANGE_PERC"
-        case lastPrice = "LAST_PRICE"
-        case volume = "VOLUME"
-        case high = "HIGH"
-        case low = "LOW"
-    }
+    let lastPrice: Float
 }
 
 

@@ -10,6 +10,8 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
 
+    let favoritesKey = "favoritesArray"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +26,14 @@ class MainTabBarController: UITabBarController {
         currencyListVC.tabBarItem.title = "Currency list"
         addChild(currencyListVC)
         
-        let favoritesVC = UINavigationController(rootViewController:FavoritesViewController())
+        let favoritesVC = FavoritesViewController()
+        if let array = UserDefaults.standard.array(forKey: favoritesKey) as? [String] {
+            favoritesVC.favoritesArray = array
+        } else {
+            var array = [String]()
+            let defaults = UserDefaults.standard
+            defaults.set(array, forKey: favoritesKey)
+        }
         favoritesVC.tabBarItem = UITabBarItem.init(tabBarSystemItem: .favorites, tag: 1)
         currencyListVC.tabBarItem.title = "Favorites"
         addChild(favoritesVC)

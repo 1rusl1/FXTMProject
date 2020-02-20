@@ -12,6 +12,7 @@ import Foundation
 import UIKit
 
 extension UIView {
+    
     func pinToSuperView() {
         translatesAutoresizingMaskIntoConstraints = false
         guard let superview = superview else {return}
@@ -19,5 +20,25 @@ extension UIView {
         leadingAnchor.constraint(equalTo: superview.leadingAnchor).isActive = true
         bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
         trailingAnchor.constraint(equalTo: superview.trailingAnchor).isActive = true
+    }
+    
+    func centerInSuperview(size: CGSize = .zero) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let superviewXAnchor = superview?.centerXAnchor {
+            centerXAnchor.constraint(equalTo: superviewXAnchor).isActive = true
+        }
+        
+        if let superviewYAnchor = superview?.centerYAnchor {
+            centerYAnchor.constraint(equalTo: superviewYAnchor).isActive = true
+        }
+        
+        if size.width != 0 {
+            widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        }
+        
+        if size.height != 0 {
+            heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        }
     }
 }
