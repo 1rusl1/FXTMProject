@@ -1,8 +1,8 @@
 //
-//  CurrencyPairCell.swift
+//  CurrencyPairCell1.swift
 //  FXTMproject
 //
-//  Created by Ruslan Sabirov on 20.02.2020.
+//  Created by Софтиус on 21/02/2020.
 //  Copyright © 2020 Ruslan Sabirov. All rights reserved.
 //
 
@@ -15,15 +15,20 @@ protocol CurrencyPairCellDelegate: AnyObject {
 class CurrencyPairCell: UITableViewCell {
 
     @IBOutlet weak var currencyPairLabel: UILabel!
-    lazy var currencyPair = String()
     weak var delegate: CurrencyPairCellDelegate?
-  
+    var currencyPair = String()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    @IBAction func addToFavoritesButtonPressed(_ sender: UIButton) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    @IBAction func addToFavoritesButtonPressed(_ sender: Any) {
         delegate?.addToFavoritesButtonPressed(currencyPair: currencyPair)
     }
     

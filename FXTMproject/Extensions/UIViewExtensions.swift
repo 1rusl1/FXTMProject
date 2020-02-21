@@ -41,4 +41,33 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
     }
+    
+    func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, insets: NSDirectionalEdgeInsets = .zero, size: CGSize = .zero) {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            self.topAnchor.constraint(equalTo: top, constant: insets.top).isActive = true
+        }
+        
+        if let leading = leading {
+            self.leftAnchor.constraint(equalTo: leading, constant: insets.leading).isActive = true
+        }
+        
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -insets.bottom).isActive = true
+        }
+        
+        if let trailing = trailing {
+            rightAnchor.constraint(equalTo: trailing, constant: -insets.trailing).isActive = true
+        }
+        
+        if size.width != 0 {
+            widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        }
+        
+        if size.height != 0 {
+            heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        }
+    }
 }

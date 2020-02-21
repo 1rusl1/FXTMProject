@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2779EFF18056115D67F6F0A6 /* Pods_FXTMproject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0F7894EE1D108C7B0B826A /* Pods_FXTMproject.framework */; };
+		62613F952400284F00EEFD2C /* CurrencyPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62613F932400284F00EEFD2C /* CurrencyPairCell.swift */; };
+		62613F962400284F00EEFD2C /* CurrencyPairCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62613F942400284F00EEFD2C /* CurrencyPairCell.xib */; };
 		D22AE79923FB04E000E17327 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22AE79823FB04E000E17327 /* AppDelegate.swift */; };
 		D22AE7A023FB04E100E17327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D22AE79F23FB04E100E17327 /* Assets.xcassets */; };
 		D22AE7A323FB04E100E17327 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D22AE7A123FB04E100E17327 /* LaunchScreen.storyboard */; };
@@ -17,13 +19,13 @@
 		D239F8AA23FC523E00BF8738 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8A923FC523E00BF8738 /* MainTabBarController.swift */; };
 		D239F8AF23FC5E0800BF8738 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8AE23FC5E0800BF8738 /* NetworkDataFetcher.swift */; };
 		D239F8B523FC722700BF8738 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239F8B423FC722700BF8738 /* UIViewExtensions.swift */; };
-		D27B040F23FF0C2A00C8F4B1 /* CurrencyPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27B040D23FF0C2A00C8F4B1 /* CurrencyPairCell.swift */; };
-		D27B041023FF0C2A00C8F4B1 /* CurrencyPairCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D27B040E23FF0C2A00C8F4B1 /* CurrencyPairCell.xib */; };
 		D2E296A323FDA2920072D76B /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E296A223FDA2920072D76B /* StringExtensions.swift */; };
 		D2E296A823FDC8010072D76B /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E296A723FDC8010072D76B /* CurrencyPair.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		62613F932400284F00EEFD2C /* CurrencyPairCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairCell.swift; sourceTree = "<group>"; };
+		62613F942400284F00EEFD2C /* CurrencyPairCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrencyPairCell.xib; sourceTree = "<group>"; };
 		6D48B0AB3168FB05C4A42F80 /* Pods-FXTMproject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXTMproject.release.xcconfig"; path = "Target Support Files/Pods-FXTMproject/Pods-FXTMproject.release.xcconfig"; sourceTree = "<group>"; };
 		BD0F7894EE1D108C7B0B826A /* Pods_FXTMproject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FXTMproject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D22AE79523FB04E000E17327 /* FXTMproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FXTMproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,8 +39,6 @@
 		D239F8A923FC523E00BF8738 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D239F8AE23FC5E0800BF8738 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		D239F8B423FC722700BF8738 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
-		D27B040D23FF0C2A00C8F4B1 /* CurrencyPairCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairCell.swift; sourceTree = "<group>"; };
-		D27B040E23FF0C2A00C8F4B1 /* CurrencyPairCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrencyPairCell.xib; sourceTree = "<group>"; };
 		D2E296A223FDA2920072D76B /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		D2E296A723FDC8010072D76B /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		EAB394E6050D9AF766DE351B /* Pods-FXTMproject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXTMproject.debug.xcconfig"; path = "Target Support Files/Pods-FXTMproject/Pods-FXTMproject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -93,10 +93,10 @@
 				D239F8AB23FC524A00BF8738 /* CurrencyList */,
 				D239F8AD23FC526600BF8738 /* Chart */,
 				D239F8AC23FC525100BF8738 /* Favorites */,
+				D2E296A423FDA5F90072D76B /* Extensions */,
 				D22AE79F23FB04E100E17327 /* Assets.xcassets */,
 				D22AE7A123FB04E100E17327 /* LaunchScreen.storyboard */,
 				D22AE7A423FB04E100E17327 /* Info.plist */,
-				D2E296A423FDA5F90072D76B /* Extensions */,
 			);
 			path = FXTMproject;
 			sourceTree = "<group>";
@@ -105,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				D239F8A323FC516A00BF8738 /* CurrencyListViewController.swift */,
-				D27B040D23FF0C2A00C8F4B1 /* CurrencyPairCell.swift */,
-				D27B040E23FF0C2A00C8F4B1 /* CurrencyPairCell.xib */,
+				62613F932400284F00EEFD2C /* CurrencyPairCell.swift */,
+				62613F942400284F00EEFD2C /* CurrencyPairCell.xib */,
 			);
 			path = CurrencyList;
 			sourceTree = "<group>";
@@ -220,8 +220,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62613F962400284F00EEFD2C /* CurrencyPairCell.xib in Resources */,
 				D22AE7A323FB04E100E17327 /* LaunchScreen.storyboard in Resources */,
-				D27B041023FF0C2A00C8F4B1 /* CurrencyPairCell.xib in Resources */,
 				D22AE7A023FB04E100E17327 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,10 +277,10 @@
 			files = (
 				D239F8AF23FC5E0800BF8738 /* NetworkDataFetcher.swift in Sources */,
 				D239F8A423FC516A00BF8738 /* CurrencyListViewController.swift in Sources */,
-				D27B040F23FF0C2A00C8F4B1 /* CurrencyPairCell.swift in Sources */,
 				D239F8B523FC722700BF8738 /* UIViewExtensions.swift in Sources */,
 				D2E296A823FDC8010072D76B /* CurrencyPair.swift in Sources */,
 				D239F8AA23FC523E00BF8738 /* MainTabBarController.swift in Sources */,
+				62613F952400284F00EEFD2C /* CurrencyPairCell.swift in Sources */,
 				D239F8A623FC518400BF8738 /* FavoritesViewController.swift in Sources */,
 				D22AE79923FB04E000E17327 /* AppDelegate.swift in Sources */,
 				D2E296A323FDA2920072D76B /* StringExtensions.swift in Sources */,

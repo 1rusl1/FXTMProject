@@ -16,6 +16,20 @@ class CurrencyListViewController: UIViewController {
     var currencyPairsArray = [String]()
     lazy var fetcher = NetworkDataFetcher()
     
+    lazy var searchText = String()
+    lazy var searchArray = [String]()
+    lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.hidesNavigationBarDuringPresentation = false
+        controller.obscuresBackgroundDuringPresentation = false
+        controller.searchBar.delegate = self
+        return controller
+    }()
+    
+    var searchBarIsEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
     let identifier = "currencyPairCell"
     let numberOfCells = 40
     let cellNibName = "CurrencyPairCell"
@@ -24,20 +38,27 @@ class CurrencyListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetcher.fetchCurrencyPairs { [weak self] pairsArray in
-            self?.currencyPairsArray.append(contentsOf: pairsArray)
-            self?.tableView.reloadData()
-        }
-        
         setupVC()
         setupTableView()
+        
+        
+        fetcher.fetchCurrencyPairs { [weak self] pairsArray in
+            self?.currencyPairsArray.append(contentsOf: pairsArray)
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        //tableView.reloadData()
+        
         // Do any additional setup after loading the view.
     }
-    
+
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(tableView)
         navigationItem.title = "Currency pairs"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     func setupTableView() {
@@ -45,19 +66,21 @@ class CurrencyListViewController: UIViewController {
         tableView.pinToSuperView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: cellNibName, bundle: nil), forCellReuseIdentifier: identifier)
+        tableView.register(UINib(nibName: "CurrencyPairCell", bundle: nil), forCellReuseIdentifier: identifier)
     }
     
 }
 
 extension CurrencyListViewController: CurrencyPairCellDelegate {
     func addToFavoritesButtonPressed(currencyPair pair: String) {
-        var favoritesArray = UserDefaults.standard.array(forKey: favoritesKey)
-        favoritesArray?.append(pair)
-        UserDefaults.standard.set(favoritesArray, forKey: favoritesKey)
+        guard var favoritesArray = UserDefaults.standard.array(forKey: favoritesKey) as? [String] else {return}
+        if favoritesArray.contains(pair) {
+            return
+        } else {
+            favoritesArray.append(pair)
+            UserDefaults.standard.set(favoritesArray, forKey: favoritesKey)
+        }
     }
-    
-    
 }
 
 extension CurrencyListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -68,10 +91,16 @@ extension CurrencyListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! CurrencyPairCell
-        let pair = currencyPairsArray[indexPath.row].formattedPair()
-        cell.currencyPair = pair
-        cell.currencyPairLabel.text = pair
         cell.delegate = self
+        if searchBarIsEmpty {
+        let pair = currencyPairsArray[indexPath.row].formattedPair()
+        cell.currencyPairLabel.text = pair
+        cell.currencyPair = currencyPairsArray[indexPath.row]
+        } else {
+        let pair = searchArray[indexPath.row].formattedPair()
+        cell.currencyPairLabel.text = pair
+        cell.currencyPair = searchArray[indexPath.row]
+        }
         return cell
     }
     
@@ -80,4 +109,22 @@ extension CurrencyListViewController: UITableViewDelegate, UITableViewDataSource
         chartController.currencyPair = currencyPairsArray[indexPath.row]
         navigationController?.pushViewController(chartController, animated: true)
     }
+}
+
+extension CurrencyListViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        searchArray.removeAll()
+        searchArray = currencyPairsArray.filter {$0.contains(searchText)}
+        tableView.reloadData()
+    }
+    
+    
+    
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        //
+//    }
+    
+    
 }

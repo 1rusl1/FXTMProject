@@ -29,6 +29,7 @@ class FavoritesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let favorites = UserDefaults.standard.array(forKey: favoritesKey)
         favoritesArray = favorites as! [String]
+        tableView.reloadData()
     }
     
     func setupVC() {
