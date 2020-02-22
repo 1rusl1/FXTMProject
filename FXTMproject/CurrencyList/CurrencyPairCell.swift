@@ -14,6 +14,8 @@ protocol CurrencyPairCellDelegate: AnyObject {
 
 class CurrencyPairCell: UITableViewCell {
 
+    
+    static let reuseIdentifier = "CurrencyPair"
     @IBOutlet weak var currencyPairLabel: UILabel!
     weak var delegate: CurrencyPairCellDelegate?
     var currencyPair = String()

@@ -8,11 +8,12 @@
 
 import UIKit
 
+
+
 class CurrencyListViewController: UIViewController {
     
     //MARK: Properties
-    
-    lazy var tableView = UITableView()
+    var tableView = UITableView()
     var currencyPairsArray = [String]()
     lazy var fetcher = NetworkDataFetcher()
     
@@ -26,6 +27,8 @@ class CurrencyListViewController: UIViewController {
         return controller
     }()
     
+    fileprivate var dataSource : UITableViewDiffableDataSource<Section, String>!
+    
     var searchBarIsEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -38,35 +41,66 @@ class CurrencyListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         setupVC()
         setupTableView()
+        setupDataSource()
+        
         
         
         fetcher.fetchCurrencyPairs { [weak self] pairsArray in
             self?.currencyPairsArray.append(contentsOf: pairsArray)
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self?.performSearch(with: "", animatingDifferences: false)
             }
         }
         //tableView.reloadData()
         
         // Do any additional setup after loading the view.
     }
-
+    
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(tableView)
         navigationItem.title = "Currency pairs"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        
     }
     
     func setupTableView() {
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.pinToSuperView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "CurrencyPairCell", bundle: nil), forCellReuseIdentifier: identifier)
+        tableView.register(UINib(nibName: "CurrencyPairCell", bundle: nil), forCellReuseIdentifier: CurrencyPairCell.reuseIdentifier)
+    }
+    
+     
+    func setupDataSource() {
+        dataSource = UITableViewDiffableDataSource<Section, String>(tableView: tableView, cellProvider: { [weak self] (tableView, _, pair) ->  UITableViewCell?  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyPairCell.reuseIdentifier) as! CurrencyPairCell
+            cell.delegate = self
+            cell.currencyPairLabel.text = pair.formattedPair()
+            cell.currencyPair = pair
+            return cell
+        })
+    }
+    
+    func performSearch(with filter: String, animatingDifferences: Bool = true) {
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
+        
+        let pairs: [String]
+        
+        if filter.isEmpty {
+            pairs = currencyPairsArray.sorted()
+        } else {
+            pairs = currencyPairsArray.filter {$0.lowercased().contains(filter.lowercased())}
+        }
+            snapshot.appendSections([.main])
+            snapshot.appendItems(pairs, toSection: .main)
+            dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        
     }
     
 }
@@ -83,26 +117,20 @@ extension CurrencyListViewController: CurrencyPairCellDelegate {
     }
 }
 
-extension CurrencyListViewController: UITableViewDelegate, UITableViewDataSource {
+extension CurrencyListViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currencyPairsArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! CurrencyPairCell
-        cell.delegate = self
-        if searchBarIsEmpty {
-        let pair = currencyPairsArray[indexPath.row].formattedPair()
-        cell.currencyPairLabel.text = pair
-        cell.currencyPair = currencyPairsArray[indexPath.row]
-        } else {
-        let pair = searchArray[indexPath.row].formattedPair()
-        cell.currencyPairLabel.text = pair
-        cell.currencyPair = searchArray[indexPath.row]
-        }
-        return cell
-    }
+    //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //        return currencyPairsArray.count
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    //        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! CurrencyPairCell
+    //        cell.delegate = self
+    //        let pair = currencyPairsArray[indexPath.row].formattedPair()
+    //        cell.currencyPairLabel.text = pair
+    //        cell.currencyPair = currencyPairsArray[indexPath.row]
+    //        return cell
+    //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chartController = ChartViewController()
@@ -115,16 +143,13 @@ extension CurrencyListViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        searchArray.removeAll()
-        searchArray = currencyPairsArray.filter {$0.contains(searchText)}
-        tableView.reloadData()
+        performSearch(with: searchText)
     }
     
-    
-    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        //
-//    }
-    
-    
+}
+
+extension CurrencyListViewController {
+    fileprivate enum Section: Hashable {
+        case main
+    }
 }
