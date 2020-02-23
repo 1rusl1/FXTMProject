@@ -35,6 +35,7 @@ class CurrencyListViewController: UIViewController {
         
         setupVC()
         setupTableView()
+        setupSearchController()
         setupDataSource()
         
         fetcher.fetchCurrencyPairs { [weak self] pairsArray in
@@ -142,8 +143,11 @@ extension CurrencyListViewController: UITableViewDelegate {
 extension CurrencyListViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         performSearch(with: searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        performSearch(with: "", animatingDifferences: true)
     }
     
 }
