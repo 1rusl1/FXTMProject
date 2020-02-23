@@ -1,6 +1,6 @@
 # FXTMProject
 Test task for FXTM
-![Currency pairs list](https://github.com/1rusl1/FXTMProject/blob/master/Screeshots/list%20of%20currency%20pairs.png)
+![Currency pairs list](https://github.com/1rusl1/FXTMProject/blob/master/Screeshots/list%20of%20currency%20pairs.png = 250x250)
 **List of currency pairs from bitfinex.com**
 
 ![Add to favorites](https://github.com/1rusl1/FXTMProject/blob/master/Screeshots/add%20to%20favorites.png)
