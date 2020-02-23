@@ -10,7 +10,6 @@ import UIKit
 
 class NetworkDataFetcher: NSObject {
     
-   
     let decoder = JSONDecoder()
     
     let urlString = "https://api.bitfinex.com/v1/symbols"
@@ -25,7 +24,6 @@ class NetworkDataFetcher: NSObject {
                 print (error.localizedDescription)
             } else {
                 guard let data = data else {
-                    print ("NO DATA")
                     return
                 }
                 do {
@@ -46,11 +44,8 @@ class NetworkDataFetcher: NSObject {
         do {
             let objects = try decoder.decode(type.self, from: data)
             return objects
-        } catch let jsonError {
-            print (jsonError.localizedDescription)
+        } catch _ {
             return nil
         }
-        
     }
-    
 }

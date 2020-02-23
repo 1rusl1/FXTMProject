@@ -11,6 +11,8 @@ import UIKit
 
 class ChartViewController: UIViewController {
     
+    //MARK: - Properties
+    
     lazy var currencyPair = String()
     
     lazy var fetcher = NetworkDataFetcher()
@@ -25,68 +27,88 @@ class ChartViewController: UIViewController {
     }()
     lazy var socketParameters = ["event": "subscribe", "channel": "ticker", "pair": currencyPair]
     
-    var chartDataSet = LineChartDataSet() {
-        didSet {
-            print ("New entry")
-        }
-    }
-
-    lazy var chartView : LineChartView = {
-        let view = LineChartView()
-        view.rightAxis.enabled = false
-        view.backgroundColor = .gray
-        return view
+    lazy var timer = Timer()
+    
+    lazy var chartDataSet : LineChartDataSet = {
+        let set = LineChartDataSet()
+        set.valueFont = UIFont.systemFont(ofSize: 10)
+        set.valueTextColor = .white
+        
+        return set
     }()
+    
+    lazy var chartView = LineChartView()
     
     let lastPriceIndex = 7
     
     var counter: Double = 0.0
+  
+    //MARK: - View lifecycle
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         setupVC()
-        setupUI()
+        setChartData()
+        setupChartView()
         socket.delegate = self
         socket.connect()
-        setData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         socket.connect()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (timer) in
+            self?.counter += 1
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         socket.disconnect()
         counter = 0
+        timer.invalidate()
     }
+    
+    //MARK: - Setup UI elements
     
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(chartView)
-    }
-    
-    func setupUI() {
         chartView.centerInSuperview(size: .init(width: view.frame.width, height: view.frame.width))
     }
     
-    func setData() {
-       let data = LineChartData(dataSets: [chartDataSet])
+    //MARK: - Configure chart
+    
+    func setupChartView() {
+        
+        chartView.backgroundColor = .systemBlue
+        let systemFont: UIFont = .boldSystemFont(ofSize: 12)
+        chartView.rightAxis.enabled = false
+        
+        chartDataSet.label = currencyPair.formattedPair()
+        
+        let yAxis = chartView.leftAxis
+        yAxis.labelFont = systemFont
+        yAxis.labelTextColor = .white
+        yAxis.axisLineColor = .white
+        yAxis.setLabelCount(6, force: false)
+        
+        let xAxis = chartView.xAxis
+        xAxis.labelFont = systemFont
+        xAxis.labelPosition = .bottom
+        xAxis.labelTextColor = .white
+        xAxis.axisLineColor = .white
+        yAxis.setLabelCount(6, force: false)
+    }
+    
+    func setChartData() {
+        let data = LineChartData(dataSets: [chartDataSet])
         chartView.data = data
     }
     
-    deinit {
-        socket.delegate = nil
-    }
+    //MARK: - Subscribe to pair price changes
     
-}
-
-extension ChartViewController: WebSocketDelegate {
-    
-    func websocketDidConnect(socket: WebSocketClient) {
-        print ("Connected")
-        let parameters = ["event": "subscribe", "channel": "ticker", "pair": currencyPair]
+    func subscribeToPair(pair: String) {
+        let parameters = ["event": "subscribe", "channel": "ticker", "pair": pair]
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(parameters)
@@ -96,26 +118,37 @@ extension ChartViewController: WebSocketDelegate {
         }
     }
     
+    deinit {
+        socket.delegate = nil
+    }
+    
+}
+
+//MARK: - WebsocketDelegate
+
+extension ChartViewController: WebSocketDelegate {
+    
+    func websocketDidConnect(socket: WebSocketClient) {
+        print ("Connected")
+        subscribeToPair(pair: currencyPair)
+        
+    }
+    
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print ("Disconnected")
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         guard let data = text.data(using: .utf16) else {return}
-        guard let currencyPair = fetcher.decode(type: [Double].self, decoder: decoder, from: data) else {return}
+        guard let currencyPair = fetcher.decode(type: [Double].self, decoder: decoder, from: data) else {return} //data is not coming, only text, decode text data to array
         let lastPrice = currencyPair[lastPriceIndex]
         let entry = ChartDataEntry(x: counter , y: lastPrice)
-        print (lastPrice)
-        print (counter)
         chartView.data?.addEntry(entry, dataSetIndex: 0)
-        counter += 1.0
         chartView.data?.notifyDataChanged()
         chartView.notifyDataSetChanged()
-        
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        
+        return
     }
-    
 }

@@ -11,12 +11,12 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
     
+    //MARK: - Properties
+    
     lazy var favoritesArray = [String]()
     
     lazy var tableView = UITableView()
     let identifier = "favoritesCell"
-    
-    let favoritesKey = "favoritesArray"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +27,17 @@ class FavoritesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let favorites = UserDefaults.standard.array(forKey: favoritesKey)
+        let favorites = UserDefaults.standard.array(forKey: Global.favoritesKey)
         favoritesArray = favorites as! [String]
         tableView.reloadData()
     }
     
+    //MARK: - Setup UI elements
+    
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(tableView)
-        navigationItem.title = "Currency pairs"
+        navigationItem.title = "Favorite pairs"
     }
     
     func setupTableView() {
@@ -47,6 +49,8 @@ class FavoritesViewController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDelegate, UITableViewDataSource
+
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,6 +61,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         let pair = favoritesArray[indexPath.row].formattedPair()
         cell.textLabel?.text = pair
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 22)
         return cell
     }
     
@@ -64,6 +69,19 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let chartController = ChartViewController()
         chartController.currencyPair = favoritesArray[indexPath.row]
         navigationController?.pushViewController(chartController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            var array = UserDefaults.standard.array(forKey: Global.favoritesKey)
+            array?.remove(at: indexPath.row)
+            UserDefaults.standard.set(array, forKey: Global.favoritesKey)
+            favoritesArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        default:
+            return
+        }
     }
 }
 

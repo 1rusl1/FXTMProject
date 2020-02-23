@@ -9,11 +9,9 @@
 import Foundation
 
 extension String {
-    
     func formattedPair() -> String {
     var pair = self
     pair.insert("/", at: pair.index(pair.startIndex, offsetBy: 3))
     return pair.uppercased()
     }
-    
 }
