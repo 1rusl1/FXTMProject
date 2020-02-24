@@ -19,6 +19,6 @@ Test task for FXTM
 
 **Favorites list, deletion supported**
 
-![Favorites](https://github.com/1rusl1/FXTMProject/blob/master/Screeshots/add%20to%20favorites.png)
+![Favorites](https://github.com/1rusl1/FXTMProject/blob/master/Screeshots/delete%20from%20favorites.png)
 
 
